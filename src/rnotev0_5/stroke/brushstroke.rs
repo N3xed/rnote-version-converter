@@ -87,13 +87,11 @@ impl From<crate::rnotev0_4::strokes::brushstroke::BrushStroke> for BrushStroke {
                 let elem: Element = elem.into();
                 let last_elem = last.unwrap();
 
-                let cp1 = last_elem.pos.lerp(&elem.pos, 0.333);
-                let cp2 = last_elem.pos.lerp(&elem.pos, 0.666);
+                // let cp1 = last_elem.pos.lerp(&elem.pos, 0.333);
+                // let cp2 = last_elem.pos.lerp(&elem.pos, 0.666);
 
-                segs.push_back(Segment::CubBez {
+                segs.push_back(Segment::Line {
                     start: last_elem,
-                    cp1,
-                    cp2,
                     end: elem,
                 });
 
