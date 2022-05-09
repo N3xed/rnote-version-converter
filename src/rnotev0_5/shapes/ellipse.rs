@@ -27,7 +27,7 @@ impl From<crate::rnotev0_4::shapes::Ellipse> for Ellipse {
     fn from(ellipse: crate::rnotev0_4::shapes::Ellipse) -> Self {
         Self {
             radii: ellipse.radii,
-            transform: ellipse.transform,
+            transform: ellipse.transform.into(),
         }
     }
 }

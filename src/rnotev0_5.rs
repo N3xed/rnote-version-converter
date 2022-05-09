@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 
-pub use crate::rnotev0_4::transform::Transform;
 use crate::rnotev0_4::Background;
 pub use crate::rnotev0_4::{Color, Orientation};
 
@@ -8,6 +7,9 @@ pub mod penpath;
 pub mod shapes;
 pub mod store;
 pub mod stroke;
+pub mod transform;
+
+pub use transform::Transform;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename = "rnotefile_wrapper")]

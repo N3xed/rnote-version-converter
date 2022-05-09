@@ -76,6 +76,10 @@ impl Rectangle {
 
 impl From<crate::rnotev0_4::shapes::Rectangle> for Rectangle {
     fn from(rect: crate::rnotev0_4::shapes::Rectangle) -> Self {
-        Self { cuboid: rect.cuboid, transform: rect.transform }
+        // Self::from_p2d_aabb(rect.global_aabb())
+         Self {
+             cuboid: rect.cuboid,
+             transform: rect.transform.into()
+         }
     }
 }

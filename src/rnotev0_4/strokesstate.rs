@@ -4,7 +4,7 @@ use crate::slot::SlotMap;
 
 use super::strokes::*;
 
-#[derive(Debug, Serialize, Deserialize, Default)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
 #[serde(default, rename = "strokes_state")]
 pub struct StrokesState {
     // Components

@@ -221,7 +221,7 @@ impl TryFrom<crate::rnotev0_4::strokes::bitmapimage::BitmapImage> for BitmapImag
                 BitmapImageFormat::Png => image::ImageFormat::Png,
             },
         )?;
-
+        
         Ok(BitmapImage {
             image,
             rectangle: bi.rectangle.into(),

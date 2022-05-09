@@ -37,26 +37,44 @@ pub type StoreSnapshot = HistoryEntry;
 
 impl From<crate::rnotev0_4::StrokesState> for HistoryEntry {
     fn from(ss: crate::rnotev0_4::StrokesState) -> Self {
-        Self {
-            stroke_components: ss
-                .strokes
-                .into_iter()
-                .filter_map(|s| {
-                    let value = if let Some(val) = s.value {
-                        Some(Into::<Option<Stroke>>::into(val)?)
-                    } else {
-                        None
-                    };
+        let mut remove_list = vec![];
+        let stroke_components = ss
+            .strokes
+            .into_iter()
+            .enumerate()
+            .filter_map(|(i, s)| {
+                let value = if let Some(val) = s.value {
+                    match TryInto::<Stroke>::try_into(val) {
+                        Ok(val) => Some(val),
+                        Err(err) => {
+                            eprintln!("{:#?}", err);
+                            remove_list.push(i);
+                            return None;
+                        }
+                    }
+                } else {
+                    None
+                };
 
-                    Some(SerdeSlot {
-                        value,
-                        version: s.version,
-                    })
+                Some(SerdeSlot {
+                    value,
+                    version: s.version,
                 })
-                .collect(),
-            trash_components: ss.trash_components,
-            selection_components: ss.selection_components,
-            chrono_components: ss.chrono_components,
+            })
+            .collect();
+
+        fn remove_from_vec<T>(index_list: &Vec<usize>, mut vec: Vec<T>) -> Vec<T> {
+            for index in index_list.iter().rev() {
+                vec.remove(*index);
+            }
+            vec
+        }
+
+        Self {
+            stroke_components,
+            trash_components: remove_from_vec(&remove_list, ss.trash_components),
+            selection_components: remove_from_vec(&remove_list, ss.selection_components),
+            chrono_components: remove_from_vec(&remove_list, ss.chrono_components),
             chrono_counter: ss.chrono_counter,
         }
     }

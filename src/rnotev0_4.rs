@@ -9,7 +9,7 @@ pub mod shapes;
 pub mod strokes;
 pub mod transform;
 
-#[derive(Debug, Serialize, Deserialize, Default)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
 #[serde(default, rename = "sheet")]
 pub struct Sheet {
     #[serde(rename = "version")]
